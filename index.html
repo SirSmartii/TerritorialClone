@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixiJS Example</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.4/pixi.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script type="module">
+        import * as playerManager from './client/models/PlayerManager.js';
+        const app = new PIXI.Application({
+            width: 800, // Breite des Canvas
+            height: 600, // Höhe des Canvas
+            backgroundColor: 0x1099bb // Hintergrundfarbe
+        });
+
+        document.body.appendChild(app.view);
+        playerManager.initPlayerManager(app, PIXI);
+
+        
+        const socket = io();
+        socket.on('player:spawn', (playerData) => {
+            playerManager.addPlayer(playerData);
+        });
+    </script>
+</body>
+
+</html>
