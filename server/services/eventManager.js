@@ -9,10 +9,12 @@ function initializeSocket(server) {
 
     io.on('connection', (socket) => {
         console.log("Client verbunden:", socket.id);
+        playerManager.initPlayerManager(io);
         playerManager.addPlayer(socket.id, socket);
 
         socket.on('disconnect', () => {
             console.log("Client getrennt:", socket.id);
+            playerManager.removePlayer(socket.id);
         });
     });
 }

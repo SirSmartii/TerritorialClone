@@ -26,6 +26,19 @@
         socket.on('player:spawn', (playerData) => {
             playerManager.addPlayer(playerData);
         });
+
+        socket.on('player:spawned', (playerData) => {
+            playerManager.addPlayer(playerData);
+            console.log(playerData);
+        });
+
+        socket.on('player:load', (playerData) => {
+            playerManager.loadPlayers(playerData);
+        });
+
+        socket.on('player:remove', (playerId) => {
+            playerManager.removePlayer(playerId);
+        });
     </script>
 </body>
 

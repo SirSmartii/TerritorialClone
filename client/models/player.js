@@ -1,6 +1,5 @@
 export class Player {
-    constructor(socketID) {
-        this.socketID = socketID;
+    constructor() {
         this.playerSprite = null;
         this.playerName = null;
     }
@@ -37,6 +36,9 @@ export class Player {
     }
 
     getPlayerSprite() {
+        if(this.playerSprite == null) {
+            throw new Error("Player sprite is not initialized!");
+        }
         return this.playerSprite;
     }
 

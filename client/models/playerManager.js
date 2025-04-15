@@ -16,16 +16,27 @@ function addPlayer(playerData) {
     PlayerList[playerData.socketID].setPlayerName(playerData.name);
 }
 
-function loadPlayers(players) {
-    let keys = Object.keys(players);
+function loadPlayers(_PlayerList) {
+    let keys = Object.keys(_PlayerList);
     keys.forEach((key) => {
-        addPlayer(key);
-        PlayerList[key].spawnPlayer(app);
+        if (PlayerList[key] == null && PlayerList[key]) {
+            PlayerList[key] = new Player.Player(key);
+            PlayerList[key].spawnPlayer(app, PIXI);
+            PlayerList[key].setPosition(_PlayerList[key].x, _PlayerList[key].y);
+            PlayerList[key].setPlayerName(_PlayerList[key].name);
+        }
     });
+    console.log("Players loaded: " + keys.length);
 }
 
 function removePlayer(socketID) {
+    if (PlayerList[socketID] == null) {
+        console.error("Player not found: " + socketID);
+        return;
+    }
+    PlayerList[socketID].getPlayerSprite().destroy();
     delete PlayerList[socketID];
+    console.log("Player removed: " + socketID);
 }
 
 function getPlayer(socketID) {
